@@ -54,7 +54,7 @@ Your task is to make [all these tests](https://github.com/GuildCrafts/tdd-bookst
 
 ```sh
 npm i -g yarn
-yarn
+yarn install
 ```
 
 ## Red... Green... Refactor
