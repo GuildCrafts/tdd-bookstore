@@ -11,7 +11,14 @@
     "node": ">=7.0.0",
     "npm": ">=3.10.8"
   },
-  "author": "Jared Grippe <jared@learnersguild.org>",
+  "contributors": [
+    {
+      "Jared Grippe": "<jared@learnersguild.org>"
+    },
+    {
+      "Harman Singh": "<harmanlearns@gmail.com>"
+    }
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,6 +30,7 @@
   "homepage": "https://github.com/GuildCrafts/tdd-bookstore#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "jquery": "^3.1.1",
     "mongoose": "^4.6.8"
   },
   "devDependencies": {

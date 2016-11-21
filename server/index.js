@@ -7,9 +7,10 @@ const errorResponse = require( './errorResponse')
 var debug = require('debug')('src:server')
 
 const mongoose = require('mongoose')
+
 mongoose.Promise = global.Promise
 // const connection = 'mongodb://127.0.0.1:27017/test'
-const connection = 'mongodb://localhost/test'
+const connection = 'mongodb://localhost:27017/test'
 
 server.on('error', onError)
 // server.on('listening', onListening)
@@ -53,19 +54,21 @@ mongoose.connect(connection)
 server.get('/ping', (request, response, next) => {
   response.send('pong')
 })
+
 server.post('/api/books', (request, response, next) => {
-  var message = 'title cannot be blank'
   Book.create(request.body)
-    // .then(book =>  response.json(book))
     .then(book => {
       if(request.body.title) {
         return response.status(201).json(book)
       }else {
-        return response.status(400).response.send('title cannot be blank')
+        var message = 'title cannot be blank'
+        console.log(message)
+        return response.status(400).response.send(message)
       }})
-    .catch( errorResponse( response ))
     .catch( error => next(error))
 
+    // .then(book =>  response.json(book))
+    // .catch( errorResponse( response ))
 })
 
 server.post('/api/test/reset-db', (request, response, next) => {
