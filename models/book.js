@@ -5,8 +5,8 @@ const books = require('../test/books.json')
 const BookSchema = new Schema ({
   title: { type:String},
   author: { type:String},
-  year: { type:String},
-  genres: { type:String},
+  year: { type:Number},
+  genres: { type:Array},
 })
 
 const Book= mongoose.model('Book', BookSchema)

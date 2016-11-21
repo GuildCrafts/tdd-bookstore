@@ -5,15 +5,18 @@ const http = require('http')
 const Book = require('../models/book.js')
 const errorResponse = require( './errorResponse')
 const {libraryPromise} = require('../models/book.js')
+const bodyParser = require('body-parser')
 
 var debug = require('debug')('src:server')
+server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: false }));
 
 
 mongoose.Promise = global.Promise
 // const connection = 'mongodb://127.0.0.1:27017/test'
 const connection = 'mongodb://localhost:27017/test'
 
-server.on('error', onError)
+// server.on('error', onError)
 // server.on('listening', onListening)
 
 const port = ( process.env.PORT || '3000')
