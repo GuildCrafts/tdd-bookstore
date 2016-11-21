@@ -1,12 +1,13 @@
+const mongoose = require('mongoose')
 const express = require('express')
 const server = express()
 const http = require('http')
 const Book = require('../models/book.js')
 const errorResponse = require( './errorResponse')
+const {libraryPromise} = require('../models/book.js')
 
 var debug = require('debug')('src:server')
 
-const mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise
 // const connection = 'mongodb://127.0.0.1:27017/test'
@@ -56,22 +57,25 @@ server.get('/ping', (request, response, next) => {
 })
 
 server.post('/api/books', (request, response, next) => {
+  // console.log('body',request.body)
+  // console.log('Book',Book)
   Book.create(request.body)
-    .then(book => {
-      if(request.body.title) {
-        return response.status(201).json(book)
-      }else {
-        var message = 'title cannot be blank'
-        console.log(message)
-        return response.status(400).response.send(message)
-      }})
-    .catch( error => next(error))
+    // .then(book => {
+    //   if(request.body.title) {
+    //     return response.status(201).json(book)
+    //   }else {
+    //     var message = 'title cannot be blank'
+    //     console.log(message)
+    //     return response.status(400).response.send(message)
+    //   }})
+    // .catch( error => next(error))
 
-    // .then(book =>  response.json(book))
-    // .catch( errorResponse( response ))
+    .then(reex =>  response.json(reex))
+    .catch( errorResponse( response ))
 })
 
 server.post('/api/test/reset-db', (request, response, next) => {
+  // mongoimport --db test --collection <books> --type json --file ../test/books.json --jsonArray
   response.send('db reset')
 })
 
