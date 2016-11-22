@@ -4,6 +4,8 @@ const server = express()
 const http = require('http')
 const Book = require('../models/book.js')
 const errorResponse = require( './errorResponse')
+const BOOKS = require('../test/books.json')
+
 
 const bodyParser = require('body-parser')
 server.use(bodyParser.json())
@@ -39,12 +41,22 @@ server.post('/api/books', (request, response, next) => {
       }})
     .catch( error => next(error))
 })
+const createBooks = (books) =>
+  Promise.all(books.map(createBook))
+const loadFixtureData = () => createBooks(BOOKS)
 
-server.get('api/books', (request, response, next) => {
-  
+
+server.get('/api/books/', (request, response, next) => {
+  console.log(request.body.id)
+  Book.find().limit(10).exec()
+    .then( books => response.status(200).json(books))
+      // if(books.length == 10) =>
+      // return response.status(201)
+    .catch( error => next(error))
 })
+
 server.post('/api/test/reset-db', (request, response, next) => {
-  // mongoimport --db test --collection <books> --type json --file ../test/books.json --jsonArray
+  // mongoimport --db test --collection books --type json --file books.json --jsonArray
   response.send('db reset')
 })
 
