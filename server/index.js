@@ -3,6 +3,7 @@ const express = require('express')
 const server = express()
 const http = require('http')
 const Book = require('../models/book.js')
+const bookToJSON = require('../models/book.js')
 const errorResponse = require( './errorResponse')
 const BOOKS = require('../test/books.json')
 // const jquery = require('jquery')
@@ -36,7 +37,8 @@ server.post( '/api/books', ( request, response, next ) => {
     .then( book => {
       if( request.body.title ) {
         book.genres.sort()
-        return response.status( 201 ).json( book )
+        // return response.status( 201 ).json( book )
+        return response.status( 201 ).json( bookToJSON(book) )
       }else {
         response.body = { error:{ message: "title cannot be blank" }}
         return response.status( 400 ).json( response.body )
@@ -85,9 +87,13 @@ server.get( '/api/books/', ( request, response, next ) => {
         .catch( error => next(error))
     }else {
       Book.find().limit(10).exec()
-        .then( books => response.status(200).json(books))
-          // if(books.length == 10) =>
-          // return response.status(201)
+
+        // .then( books => response.status(200).json(books))
+        .then( books => {
+          const bookData = books.map(bookToJSON)
+          response.status(200).json(bookData)
+        })
+          if(books.length == 10) return response.status(201)
         .catch( error => next(error))
     }
 })
@@ -95,7 +101,10 @@ server.get( '/api/books/', ( request, response, next ) => {
 
 //Resets the database
 server.post('/api/test/reset-db', (request, response, next) => {
-  // mongoimport --db test --collection books --type json --file books.json --jsonArray
+  mongoose.connection.collections['books'].drop( function(err) {
+    console.log('collection dropped');
+  })
+  //mongoimport --db test --collection books --type json --file books.json --jsonArray
   response.send('db reset')
 })
 
