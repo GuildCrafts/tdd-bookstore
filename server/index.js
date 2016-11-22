@@ -5,7 +5,8 @@ const http = require('http')
 const Book = require('../models/book.js')
 const errorResponse = require( './errorResponse')
 const BOOKS = require('../test/books.json')
-
+// const jquery = require('jquery')
+// const $ = require('jquery')(require("jsdom").jsdom().parentWindow)
 
 const bodyParser = require('body-parser')
 server.use(bodyParser.json())
@@ -42,35 +43,29 @@ server.post('/api/books', (request, response, next) => {
     .catch( error => next(error))
 })
 
-// server.get('/api/books/', (request, response, next) => {
-//   Book.find().limit(10).exec()
-//     .then( books => response.status(200).json(books))
-//       // if(books.length == 10) =>
-//       // return response.status(201)
-//     .catch( error => next(error))
-//
-// })
+server.get('/api/books/', (request, response, next) => {
 
+    if(request.query.author){
+      toTitleCase = (str) => {
+        return str.replace(/\w\S*/g, (txt) => {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+      }
+      const something = toTitleCase(request.query.author)
+      // let re = new RegEx(something, "g")
+      let re = new RegExp(something, 'i')
+      console.log("authorPerson: ", something);
 
-server.get('/api/books', (request, response) => {
-  console.log("im here!!!");
-  function toTitleCase(str)
-  {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  }
-  const author = toTitleCase(request.param('author'))
-
-  // Book.find().populate({ path: 'books', match: { author: { $gte: author } }, select: 'title'}).exec()
-  //   .then( books => response.status(200).json(books))
-  const result = BOOKS.filter( author => {
-    return "author" === author
-  })
-  console.log("author: ", result);
-  const books = result.filter( title => {
-    return "title" === result.title
-  })
-  console.log("bruh: ", books);
-
+      Book.find().where('author').regex(re).limit(3).exec()
+        .then( books => { const result = books.filter( book => {
+          return book.title})
+          response.status(200).json(result)})
+        .catch( error => next(error))
+    }else{
+      Book.find().limit(10).exec()
+        .then( books => response.status(200).json(books))
+          // if(books.length == 10) =>
+          // return response.status(201)
+        .catch( error => next(error))
+    }
 })
 
 server.post('/api/test/reset-db', (request, response, next) => {
