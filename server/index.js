@@ -58,12 +58,12 @@ server.get( '/api/books/', ( request, response, next ) => {
       let re = new RegExp( something, 'i' )
       console.log( "authorPerson: ", something )
 
-      Book.find().where( 'author' ).regex( re ).limit( 3 ).exec()
+      Book.find().where( 'author' ).regex( re ).exec()
         .then( books => { let result = books.filter( book => {
           return book.title })
           response.status( 200 ).json( result )})
         .catch( error => next( error ))
-    }else if( request.query.title ) {
+    }else if( request.query.title || (request.query.year && request.query.title) ) {
       toTitleCase = ( str ) => {
         return str.replace(/\w\S*/g, ( txt ) => { return txt.charAt(0).toUpperCase() + txt.substr( 1 ).toLowerCase() })
       }
@@ -72,7 +72,7 @@ server.get( '/api/books/', ( request, response, next ) => {
       let re = new RegExp( something, 'i' )
       console.log( "authorPerson: ", something )
 
-      Book.find().where( 'title' ).regex( re ).limit( 3 ).exec()
+      Book.find().where( 'title' ).regex( re ).exec()
         .then( books => { let result = books.filter( book => {
           return book.title})
           response.status(200).json( result )})
@@ -80,20 +80,27 @@ server.get( '/api/books/', ( request, response, next ) => {
     }else if(request.query.year) {
       const number = request.query.year
 
-      Book.find( {year: number} ).limit(5).exec()
+      Book.find( {year: number} ).exec()
         .then( books => { let result = books.filter( book => {
           return book.year})
+          result.sort((a,b)=>{
+            let titleA = a.title.toLowerCase(), titleB = b.title.toLowerCase()
+            if(titleA < titleB) return -1
+            if(titleA > titleB) return 1
+            return 0
+          })
+          console.log(result);
           response.status(200).json( result )})
         .catch( error => next(error))
     }else {
       Book.find().limit(10).exec()
-
+      // let page = BOOKS.map( book => return  )
         // .then( books => response.status(200).json(books))
         .then( books => {
           const bookData = books.map(bookToJSON)
           response.status(200).json(bookData)
         })
-          if(books.length == 10) return response.status(201)
+          // if(books.length == 10) return response.status(201)
         .catch( error => next(error))
     }
 })

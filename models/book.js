@@ -14,10 +14,11 @@ const bookToJSON = (bookDocument) => {
   }
 }
 const BookSchema = new Schema ({
-  title: { type:String},
-  author: { type:String},
-  year: { type:Number},
-  genres: { type:Array},
+  _id: { type:Number },
+  title: { type:String },
+  author: { type:String },
+  year: { type:Number },
+  genres: { type:Array },
 })
 BookSchema.plugin(autoIncrement.plugin, 'Book')
 
@@ -30,6 +31,7 @@ const Book = mongoose.model('Book', BookSchema)
 //     year: data.year,
 //     genres: data.genres
 //   }
+//
 // })
 //
 // const libraryPromise = Bookstore.create( dataMatchingSchema )
