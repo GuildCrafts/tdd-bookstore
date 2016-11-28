@@ -30,21 +30,7 @@ $ yarn test
         ✓ should render 10 authors
       GET /api/authors?page=2
         ✓ should render the next 10 authors
-      GET /api/books/12
-        when the book exists
-          ✓ should render book 12
-        when the book doesn't exist
-          ✓ should render nothing with status 404
-      GET /api/genres
-        ✓ should render up to 10 genres
-      POST /api/book/12
-        ✓ should update the book
-      POST /api/book/12/delete
-        ✓ should delete the book
-
-
-  16 passing (4s)
-```
+      
 
 **Get All The Tests To Pass! :D**
 
