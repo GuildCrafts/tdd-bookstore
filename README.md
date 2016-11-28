@@ -1,5 +1,17 @@
 # TDD Bookstore
 
+SPECS:
+- [x] Setup API to get JSON responses
+- [x] Ping should return Pong /ping
+- [x] Drop Database and create database using default books.JSON
+- [x] GET all books /api/books
+- [x] POST a book /api/books
+- [x] GET 10 books /api/books
+- [x] GET books by author /api/books?author=PhiLip
+- [x] GET books by title /api/books?title=World 
+- [x] GET books by year /api/books?year=1953
+
+
 Your goal is to get to this:
 
 ```
@@ -28,8 +40,6 @@ $ yarn test
         ✓ should render books published in 1953 and with a title that includes the string "th"
       GET /api/authors
         ✓ should render 10 authors
-      GET /api/authors?page=2
-        ✓ should render the next 10 authors
       
 
 **Get All The Tests To Pass! :D**
