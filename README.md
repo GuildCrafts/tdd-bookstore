@@ -1,4 +1,4 @@
-# TDD Bookstore
+# TDD Bookstore TEAM NAME: #INCREDIBLE-BOA
 
 SPECS:
 - [x] Setup API to get JSON responses
