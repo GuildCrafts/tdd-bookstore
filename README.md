@@ -1,4 +1,16 @@
-# TDD Bookstore
+# TDD Bookstore TEAM NAME: #INCREDIBLE-BOA
+
+SPECS:
+- [x] Setup API to get JSON responses
+- [x] Ping should return Pong /ping
+- [x] Drop Database and create database using default books.JSON
+- [x] GET all books /api/books
+- [x] POST a book /api/books
+- [x] GET 10 books /api/books
+- [x] GET books by author /api/books?author=PhiLip
+- [x] GET books by title /api/books?title=World 
+- [x] GET books by year /api/books?year=1953
+
 
 Your goal is to get to this:
 
@@ -28,23 +40,7 @@ $ yarn test
         ✓ should render books published in 1953 and with a title that includes the string "th"
       GET /api/authors
         ✓ should render 10 authors
-      GET /api/authors?page=2
-        ✓ should render the next 10 authors
-      GET /api/books/12
-        when the book exists
-          ✓ should render book 12
-        when the book doesn't exist
-          ✓ should render nothing with status 404
-      GET /api/genres
-        ✓ should render up to 10 genres
-      POST /api/book/12
-        ✓ should update the book
-      POST /api/book/12/delete
-        ✓ should delete the book
-
-
-  16 passing (4s)
-```
+      
 
 **Get All The Tests To Pass! :D**
 
@@ -54,7 +50,7 @@ Your task is to make [all these tests](https://github.com/GuildCrafts/tdd-bookst
 
 ```sh
 npm i -g yarn
-yarn
+yarn install
 ```
 
 ## Red... Green... Refactor
